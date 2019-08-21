@@ -1,0 +1,14 @@
+logging:
+  level:
+    cn:
+      windyrjc:
+        security: debug
+windy:
+  security:
+    jwt:
+      jwtKey: ascdsdf
+    injectClass: cn.windyrjc.security.demo.bean.UserDetail
+    imageCode:
+      enable: true
+
+#    ignoreUrl: /test/**

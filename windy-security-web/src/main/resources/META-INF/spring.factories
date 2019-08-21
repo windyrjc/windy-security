@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.windyrjc.security.web.validate.ValidateCodeConfig,\
+  cn.windyrjc.security.web.validate.image.ImageValidateCodeBeanConfig
