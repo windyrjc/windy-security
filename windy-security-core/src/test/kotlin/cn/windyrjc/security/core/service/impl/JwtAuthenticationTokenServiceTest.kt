@@ -1,7 +1,7 @@
-package cn.windyrjc.security.core.service.impl
+package com.github.windyrjc.security.core.service.impl
 
-import cn.windyrjc.security.core.AuthenticationToken
-import cn.windyrjc.security.core.AuthenticationUser
+import com.github.windyrjc.security.core.AuthenticationToken
+import com.github.windyrjc.security.core.AuthenticationUser
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.Before
 import org.junit.Test

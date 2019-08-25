@@ -8,7 +8,7 @@ windy-security 是适用于spring boot的安全框架,它使用kotlin语言编�
 
 ```xml
          <dependency>
-            <groupId>cn.windyrjc.security</groupId>
+            <groupId>com.github.windyrjc</groupId>
             <artifactId>windy-security-web</artifactId>
             <version>${latest version}</version>
         </dependency>
@@ -70,7 +70,7 @@ public class TestController {
 ```yaml
 windy:
   security:
-    injectClass: cn.windyrjc.security.demo.bean.UserDetail
+    injectClass: UserDetail
 ```
 
 ### 更换jwt 私钥

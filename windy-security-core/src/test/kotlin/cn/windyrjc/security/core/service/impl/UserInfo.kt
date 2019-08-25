@@ -1,4 +1,4 @@
-package cn.windyrjc.security.core.service.impl
+package com.github.windyrjc.security.core.service.impl
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐

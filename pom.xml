@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
 
-    <groupId>cn.windyrjc.security</groupId>
+    <groupId>com.github.windyrjc</groupId>
     <artifactId>windy-security</artifactId>
     <version>0.0.2.5-SNAPSHOT</version>
     <name>windy-security</name>
@@ -84,8 +84,73 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--Nexus Staging Maven插件是将组件部署到OSSRH并将其发布到Central Repository的推荐方法-->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo,manual</distribution>
+        </license>
+    </licenses>
+
+
+    <developers>
+        <developer>
+            <name>windyrjc</name>
+            <email>windyrjc@gmail.com</email>
+            <organization>uppower</organization>
+            <url>https://github.com/windyrjc</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/windyrjc/windy-security.git</connection>
+        <developerConnection>scm:git:https://github.com/windyrjc/windy-security.git</developerConnection>
+        <url>https://github.com/windyrjc/windy-security</url>
+        <tag>1.2.0</tag>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>maven-central</id>
+            <name>OSS Snapshots Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>maven-central</id>
+            <name>OSS Staging Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
 
     <modules>
         <module>windy-security-core</module>
