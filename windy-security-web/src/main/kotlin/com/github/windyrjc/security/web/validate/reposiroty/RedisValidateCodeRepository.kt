@@ -1,8 +1,8 @@
-package com.github.windyrjc.web.validate.reposiroty
+package com.github.windyrjc.security.web.validate.reposiroty
 
-import com.github.windyrjc.web.validate.ValidateCode
-import com.github.windyrjc.web.validate.ValidateCodeType
-import com.github.windyrjc.web.validate.image.ImageValidateCode
+import com.github.windyrjc.security.web.validate.ValidateCode
+import com.github.windyrjc.security.web.validate.ValidateCodeType
+import com.github.windyrjc.security.web.validate.image.ImageValidateCode
 import cn.windyrjc.utils.copy.DataUtil
 import org.springframework.data.redis.core.RedisTemplate
 import java.util.concurrent.TimeUnit

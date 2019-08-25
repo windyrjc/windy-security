@@ -1,7 +1,7 @@
-package com.github.windyrjc.web.validate.image
+package com.github.windyrjc.security.web.validate.image
 
-import com.github.windyrjc.web.properties.WindySecurityWebProperties
-import com.github.windyrjc.web.validate.reposiroty.ValidateCodeRepository
+import com.github.windyrjc.security.web.properties.WindySecurityWebProperties
+import com.github.windyrjc.security.web.validate.reposiroty.ValidateCodeRepository
 import com.google.code.kaptcha.impl.DefaultKaptcha
 import com.google.code.kaptcha.util.Config
 import org.springframework.beans.factory.annotation.Autowired

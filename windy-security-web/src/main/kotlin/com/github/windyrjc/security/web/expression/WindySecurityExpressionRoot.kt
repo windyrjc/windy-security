@@ -1,6 +1,6 @@
-package com.github.windyrjc.web.expression
+package com.github.windyrjc.security.web.expression
 
-import com.github.windyrjc.core.AuthenticationUser
+import com.github.windyrjc.security.core.AuthenticationUser
 import org.springframework.security.access.PermissionEvaluator
 import org.springframework.security.access.expression.SecurityExpressionOperations
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations

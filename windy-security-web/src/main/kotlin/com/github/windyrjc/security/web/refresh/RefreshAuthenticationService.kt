@@ -1,7 +1,7 @@
-package com.github.windyrjc.web.refresh
+package com.github.windyrjc.security.web.refresh
 
-import com.github.windyrjc.web.AuthenticationService
-import com.github.windyrjc.web.beans.UserDetails
+import com.github.windyrjc.security.web.AuthenticationService
+import com.github.windyrjc.security.web.beans.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 
 /**

@@ -1,9 +1,9 @@
-package com.github.windyrjc.web.annotation
+package com.github.windyrjc.security.web.annotation
 
-import com.github.windyrjc.core.service.TokenService
-import com.github.windyrjc.web.config.WindySecurityBaseConfig
-import com.github.windyrjc.web.config.WindySecurityMethodSecurityConfiguration
-import com.github.windyrjc.web.config.WindySecurityWebConfig
+import com.github.windyrjc.security.core.service.TokenService
+import com.github.windyrjc.security.web.config.WindySecurityBaseConfig
+import com.github.windyrjc.security.web.config.WindySecurityMethodSecurityConfiguration
+import com.github.windyrjc.security.web.config.WindySecurityWebConfig
 import org.springframework.context.annotation.Import
 
 /**

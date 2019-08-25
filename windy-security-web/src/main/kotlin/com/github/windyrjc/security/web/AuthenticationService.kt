@@ -1,6 +1,6 @@
-package com.github.windyrjc.web
+package com.github.windyrjc.security.web
 
-import com.github.windyrjc.web.beans.UserDetails
+import com.github.windyrjc.security.web.beans.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 
 /**

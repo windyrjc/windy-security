@@ -1,4 +1,4 @@
-package com.github.windyrjc.web.handler
+package com.github.windyrjc.security.web.handler
 
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.AuthenticationFailureHandler

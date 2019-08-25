@@ -1,4 +1,4 @@
-package com.github.windyrjc.demo.bean;
+package com.github.windyrjc.security.demo.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

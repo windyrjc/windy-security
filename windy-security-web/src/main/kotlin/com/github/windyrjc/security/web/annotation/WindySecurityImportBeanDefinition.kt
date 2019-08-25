@@ -1,8 +1,8 @@
-package com.github.windyrjc.web.annotation
+package com.github.windyrjc.security.web.annotation
 
-import com.github.windyrjc.core.service.TokenService
-import com.github.windyrjc.web.config.JwtAuthenticationServiceConfig
-import com.github.windyrjc.web.config.RedisAuthenticationTokenServiceConfig
+import com.github.windyrjc.security.core.service.TokenService
+import com.github.windyrjc.security.web.config.JwtAuthenticationServiceConfig
+import com.github.windyrjc.security.web.config.RedisAuthenticationTokenServiceConfig
 import org.springframework.context.annotation.ImportSelector
 import org.springframework.core.type.AnnotationMetadata
 

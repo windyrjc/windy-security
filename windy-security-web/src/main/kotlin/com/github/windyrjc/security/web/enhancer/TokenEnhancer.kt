@@ -1,6 +1,6 @@
-package com.github.windyrjc.web.enhancer
+package com.github.windyrjc.security.web.enhancer
 
-import com.github.windyrjc.core.AuthenticationUser
+import com.github.windyrjc.security.core.AuthenticationUser
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐

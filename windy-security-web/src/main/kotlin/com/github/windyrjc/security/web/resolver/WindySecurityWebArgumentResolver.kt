@@ -1,7 +1,7 @@
-package com.github.windyrjc.web.resolver
+package com.github.windyrjc.security.web.resolver
 
-import com.github.windyrjc.core.AuthenticationUser
-import com.github.windyrjc.core.exception.WindySecurityException
+import com.github.windyrjc.security.core.AuthenticationUser
+import com.github.windyrjc.security.core.exception.WindySecurityException
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.core.MethodParameter
 import org.springframework.security.core.context.SecurityContextHolder

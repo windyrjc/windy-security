@@ -1,6 +1,6 @@
-package com.github.windyrjc.web.cors
+package com.github.windyrjc.security.web.cors
 
-import com.github.windyrjc.common.UrlMatcherRegistry
+import com.github.windyrjc.security.common.UrlMatcherRegistry
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.util.AntPathMatcher

@@ -1,4 +1,4 @@
-package com.github.windyrjc.web.config.selector
+package com.github.windyrjc.security.web.config.selector
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 

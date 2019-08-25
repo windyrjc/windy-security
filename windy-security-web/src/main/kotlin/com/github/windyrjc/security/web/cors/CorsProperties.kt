@@ -1,4 +1,4 @@
-package com.github.windyrjc.web.cors
+package com.github.windyrjc.security.web.cors
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐

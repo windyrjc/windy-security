@@ -1,7 +1,9 @@
-package com.github.windyrjc.web.properties
+package com.github.windyrjc.security.web.properties
 
-import com.github.windyrjc.web.cors.CorsProperties
-import com.github.windyrjc.web.validate.image.ImageValidateCodeProperties
+import com.github.windyrjc.security.web.cors.CorsProperties
+import com.github.windyrjc.security.web.properties.JwtProperties
+import com.github.windyrjc.security.web.properties.RedisProperties
+import com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**

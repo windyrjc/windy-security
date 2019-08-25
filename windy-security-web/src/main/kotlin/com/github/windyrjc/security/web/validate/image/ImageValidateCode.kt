@@ -1,6 +1,6 @@
-package com.github.windyrjc.web.validate.image
+package com.github.windyrjc.security.web.validate.image
 
-import com.github.windyrjc.web.validate.ValidateCode
+import com.github.windyrjc.security.web.validate.ValidateCode
 import java.awt.image.BufferedImage
 
 /**

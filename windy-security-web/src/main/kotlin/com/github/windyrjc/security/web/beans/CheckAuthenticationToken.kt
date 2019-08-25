@@ -1,4 +1,4 @@
-package com.github.windyrjc.web.beans
+package com.github.windyrjc.security.web.beans
 
 import org.springframework.security.authentication.AbstractAuthenticationToken
 

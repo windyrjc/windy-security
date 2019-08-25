@@ -1,9 +1,9 @@
-package com.github.windyrjc.core.service.impl
+package com.github.windyrjc.security.core.service.impl
 
-import com.github.windyrjc.core.AuthenticationRefreshToken
-import com.github.windyrjc.core.AuthenticationToken
-import com.github.windyrjc.core.exception.WindySecurityException
-import com.github.windyrjc.core.service.AuthenticationTokenService
+import com.github.windyrjc.security.core.AuthenticationRefreshToken
+import com.github.windyrjc.security.core.AuthenticationToken
+import com.github.windyrjc.security.core.exception.WindySecurityException
+import com.github.windyrjc.security.core.service.AuthenticationTokenService
 import cn.windyrjc.utils.copy.DataUtil
 import io.jsonwebtoken.*
 import java.util.*

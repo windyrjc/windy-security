@@ -1,6 +1,6 @@
-package com.github.windyrjc.web.validate.exception
+package com.github.windyrjc.security.web.validate.exception
 
-import com.github.windyrjc.core.exception.WindySecurityException
+import com.github.windyrjc.security.core.exception.WindySecurityException
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐

@@ -1,9 +1,9 @@
-package com.github.windyrjc.demo.config;
+package com.github.windyrjc.security.demo.config;
 
-import com.github.windyrjc.demo.bean.UserDetail;
-import com.github.windyrjc.web.annotation.RefreshMapping;
-import com.github.windyrjc.web.beans.UserDetails;
-import com.github.windyrjc.web.refresh.RefreshAuthenticationService;
+import com.github.windyrjc.security.demo.bean.UserDetail;
+import com.github.windyrjc.security.web.annotation.RefreshMapping;
+import com.github.windyrjc.security.web.beans.UserDetails;
+import com.github.windyrjc.security.web.refresh.RefreshAuthenticationService;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;

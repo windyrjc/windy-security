@@ -1,14 +1,13 @@
-package com.github.windyrjc.web.config
+package com.github.windyrjc.security.web.config
 
-import com.github.windyrjc.web.*
-import com.github.windyrjc.web.config.selector.WindySecurityConfigSelector
-import com.github.windyrjc.web.cors.SimpleCorsFilter
-import com.github.windyrjc.web.properties.WindySecurityWebProperties
-import com.github.windyrjc.web.resolver.WindySecurityWebArgumentResolver
+import com.github.windyrjc.security.web.*
+import com.github.windyrjc.security.web.config.selector.WindySecurityConfigSelector
+import com.github.windyrjc.security.web.cors.SimpleCorsFilter
+import com.github.windyrjc.security.web.properties.WindySecurityWebProperties
+import com.github.windyrjc.security.web.resolver.WindySecurityWebArgumentResolver
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder

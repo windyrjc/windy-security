@@ -1,4 +1,4 @@
-package com.github.windyrjc.web.validate
+package com.github.windyrjc.security.web.validate
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐

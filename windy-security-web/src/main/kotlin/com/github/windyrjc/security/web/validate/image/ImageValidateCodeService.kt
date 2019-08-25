@@ -1,10 +1,10 @@
-package com.github.windyrjc.web.validate.image
+package com.github.windyrjc.security.web.validate.image
 
-import com.github.windyrjc.web.validate.AbstractValidateCodeService
-import com.github.windyrjc.web.validate.ValidateCode
-import com.github.windyrjc.web.validate.ValidateCodeGenerator
-import com.github.windyrjc.web.validate.ValidateCodeType
-import com.github.windyrjc.web.validate.reposiroty.ValidateCodeRepository
+import com.github.windyrjc.security.web.validate.AbstractValidateCodeService
+import com.github.windyrjc.security.web.validate.ValidateCode
+import com.github.windyrjc.security.web.validate.ValidateCodeGenerator
+import com.github.windyrjc.security.web.validate.ValidateCodeType
+import com.github.windyrjc.security.web.validate.reposiroty.ValidateCodeRepository
 import javax.imageio.ImageIO
 import javax.servlet.http.HttpServletResponse
 

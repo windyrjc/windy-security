@@ -1,7 +1,7 @@
-package com.github.windyrjc.web.validate.reposiroty
+package com.github.windyrjc.security.web.validate.reposiroty
 
-import com.github.windyrjc.web.validate.ValidateCode
-import com.github.windyrjc.web.validate.ValidateCodeType
+import com.github.windyrjc.security.web.validate.ValidateCode
+import com.github.windyrjc.security.web.validate.ValidateCodeType
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐

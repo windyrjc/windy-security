@@ -1,4 +1,4 @@
-package com.github.windyrjc.web.validate.image
+package com.github.windyrjc.security.web.validate.image
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐

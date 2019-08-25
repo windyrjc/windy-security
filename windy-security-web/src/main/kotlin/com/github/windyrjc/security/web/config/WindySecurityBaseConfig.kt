@@ -1,15 +1,15 @@
-package com.github.windyrjc.web.config
+package com.github.windyrjc.security.web.config
 
-import com.github.windyrjc.common.UrlMatcherRegistry
-import com.github.windyrjc.common.UrlStrategyMatcher
-import com.github.windyrjc.web.AuthenticationProcessingFilter
-import com.github.windyrjc.web.AuthenticationService
-import com.github.windyrjc.web.WindySecurityAuthenticationEntryPoint
-import com.github.windyrjc.web.annotation.RefreshMapping
-import com.github.windyrjc.web.config.selector.WindySecurityConfigSelector
-import com.github.windyrjc.web.handler.AuthenticationTokenResponseHandler
-import com.github.windyrjc.web.properties.WindySecurityWebProperties
-import com.github.windyrjc.web.refresh.RefreshAuthenticationService
+import com.github.windyrjc.security.common.UrlMatcherRegistry
+import com.github.windyrjc.security.common.UrlStrategyMatcher
+import com.github.windyrjc.security.web.AuthenticationProcessingFilter
+import com.github.windyrjc.security.web.AuthenticationService
+import com.github.windyrjc.security.web.WindySecurityAuthenticationEntryPoint
+import com.github.windyrjc.security.web.annotation.RefreshMapping
+import com.github.windyrjc.security.web.config.selector.WindySecurityConfigSelector
+import com.github.windyrjc.security.web.handler.AuthenticationTokenResponseHandler
+import com.github.windyrjc.security.web.properties.WindySecurityWebProperties
+import com.github.windyrjc.security.web.refresh.RefreshAuthenticationService
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Autowired

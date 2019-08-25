@@ -1,7 +1,7 @@
-package com.github.windyrjc.web.validate.image
+package com.github.windyrjc.security.web.validate.image
 
-import com.github.windyrjc.web.validate.ValidateCode
-import com.github.windyrjc.web.validate.ValidateCodeGenerator
+import com.github.windyrjc.security.web.validate.ValidateCode
+import com.github.windyrjc.security.web.validate.ValidateCodeGenerator
 import com.google.code.kaptcha.Producer
 import org.springframework.beans.factory.annotation.Autowired
 

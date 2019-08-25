@@ -1,9 +1,9 @@
-package com.github.windyrjc.web
+package com.github.windyrjc.security.web
 
-import com.github.windyrjc.common.UrlMatcherRegistry
-import com.github.windyrjc.core.exception.WindySecurityException
-import com.github.windyrjc.core.service.AuthenticationTokenService
-import com.github.windyrjc.web.properties.WindySecurityWebProperties
+import com.github.windyrjc.security.common.UrlMatcherRegistry
+import com.github.windyrjc.security.core.exception.WindySecurityException
+import com.github.windyrjc.security.core.service.AuthenticationTokenService
+import com.github.windyrjc.security.web.properties.WindySecurityWebProperties
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,7 +1,7 @@
-package com.github.windyrjc.demo.config;
+package com.github.windyrjc.security.demo.config;
 
-import com.github.windyrjc.common.UrlMatcherRegistry;
-import com.github.windyrjc.common.UrlStrategyMatcher;
+import com.github.windyrjc.security.common.UrlMatcherRegistry;
+import com.github.windyrjc.security.common.UrlStrategyMatcher;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.github.windyrjc.demo.enhancer
 
-import com.github.windyrjc.core.AuthenticationUser
-import com.github.windyrjc.web.enhancer.TokenEnhancer
+import com.github.windyrjc.security.core.AuthenticationUser
+import com.github.windyrjc.security.web.enhancer.TokenEnhancer
 import org.springframework.stereotype.Component
 
 /**

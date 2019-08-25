@@ -1,4 +1,4 @@
-package com.github.windyrjc.web.annotation
+package com.github.windyrjc.security.web.annotation
 
 import org.springframework.stereotype.Component
 

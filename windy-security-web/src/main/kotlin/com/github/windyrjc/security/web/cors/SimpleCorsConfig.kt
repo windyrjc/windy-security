@@ -1,7 +1,5 @@
-package com.github.windyrjc.web.cors
+package com.github.windyrjc.security.web.cors
 
-import com.github.windyrjc.web.properties.WindySecurityWebProperties
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

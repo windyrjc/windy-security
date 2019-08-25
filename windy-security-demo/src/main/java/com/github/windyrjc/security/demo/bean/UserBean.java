@@ -1,6 +1,6 @@
-package com.github.windyrjc.demo.bean;
+package com.github.windyrjc.security.demo.bean;
 
-import com.github.windyrjc.web.validate.image.ImageValidateCodeBean;
+import com.github.windyrjc.security.web.validate.image.ImageValidateCodeBean;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 

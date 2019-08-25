@@ -1,6 +1,6 @@
-package com.github.windyrjc.web.annotation
+package com.github.windyrjc.security.web.annotation
 
-import com.github.windyrjc.web.cors.SimpleCorsConfig
+import com.github.windyrjc.security.web.cors.SimpleCorsConfig
 import org.springframework.context.annotation.Import
 
 /**

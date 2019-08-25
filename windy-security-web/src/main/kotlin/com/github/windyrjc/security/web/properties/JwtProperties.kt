@@ -1,4 +1,4 @@
-package com.github.windyrjc.web.properties
+package com.github.windyrjc.security.web.properties
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐

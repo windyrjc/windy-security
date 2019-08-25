@@ -1,7 +1,7 @@
-package com.github.windyrjc.web.validate
+package com.github.windyrjc.security.web.validate
 
-import com.github.windyrjc.web.validate.exception.ValidateCodeException
-import com.github.windyrjc.web.validate.reposiroty.ValidateCodeRepository
+import com.github.windyrjc.security.web.validate.exception.ValidateCodeException
+import com.github.windyrjc.security.web.validate.reposiroty.ValidateCodeRepository
 import javax.servlet.http.HttpServletResponse
 
 /**

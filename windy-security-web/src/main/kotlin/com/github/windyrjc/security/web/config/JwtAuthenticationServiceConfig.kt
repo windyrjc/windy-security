@@ -1,7 +1,7 @@
-package com.github.windyrjc.web.config
+package com.github.windyrjc.security.web.config
 
-import com.github.windyrjc.core.service.impl.JwtAuthenticationTokenService
-import com.github.windyrjc.web.properties.WindySecurityWebProperties
+import com.github.windyrjc.security.core.service.impl.JwtAuthenticationTokenService
+import com.github.windyrjc.security.web.properties.WindySecurityWebProperties
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

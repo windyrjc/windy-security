@@ -1,12 +1,12 @@
-package com.github.windyrjc.web.handler
+package com.github.windyrjc.security.web.handler
 
-import com.github.windyrjc.core.AuthenticationRefreshToken
-import com.github.windyrjc.core.AuthenticationToken
-import com.github.windyrjc.core.AuthenticationTokenResponse
-import com.github.windyrjc.core.AuthenticationUser
-import com.github.windyrjc.core.service.AuthenticationTokenService
-import com.github.windyrjc.web.enhancer.TokenEnhancer
-import com.github.windyrjc.web.properties.WindySecurityWebProperties
+import com.github.windyrjc.security.core.AuthenticationRefreshToken
+import com.github.windyrjc.security.core.AuthenticationToken
+import com.github.windyrjc.security.core.AuthenticationTokenResponse
+import com.github.windyrjc.security.core.AuthenticationUser
+import com.github.windyrjc.security.core.service.AuthenticationTokenService
+import com.github.windyrjc.security.web.enhancer.TokenEnhancer
+import com.github.windyrjc.security.web.properties.WindySecurityWebProperties
 import cn.windyrjc.utils.response.Response
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired

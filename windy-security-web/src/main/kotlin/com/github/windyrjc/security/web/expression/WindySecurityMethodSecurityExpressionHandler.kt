@@ -1,4 +1,4 @@
-package com.github.windyrjc.web.expression
+package com.github.windyrjc.security.web.expression
 
 import org.aopalliance.intercept.MethodInvocation
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler

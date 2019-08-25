@@ -1,6 +1,6 @@
-package com.github.windyrjc.web.config.selector
+package com.github.windyrjc.security.web.config.selector
 
-import com.github.windyrjc.core.exception.WindySecurityException
+import com.github.windyrjc.security.core.exception.WindySecurityException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 

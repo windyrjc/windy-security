@@ -1,7 +1,7 @@
-package com.github.windyrjc.web.validate
+package com.github.windyrjc.security.web.validate
 
-import com.github.windyrjc.web.validate.reposiroty.RedisValidateCodeRepository
-import com.github.windyrjc.web.validate.reposiroty.ValidateCodeRepository
+import com.github.windyrjc.security.web.validate.reposiroty.RedisValidateCodeRepository
+import com.github.windyrjc.security.web.validate.reposiroty.ValidateCodeRepository
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
