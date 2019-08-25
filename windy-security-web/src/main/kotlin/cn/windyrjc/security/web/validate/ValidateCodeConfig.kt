@@ -1,9 +1,13 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.validate
+
+import cn.windyrjc.security.web.validate.reposiroty.RedisValidateCodeRepository
+import cn.windyrjc.security.web.validate.reposiroty.ValidateCodeRepository
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.data.redis.connection.RedisConnectionFactory
+import org.springframework.data.redis.core.RedisTemplate
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +26,19 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-04-01 12:32
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+@Configuration
+@ConditionalOnProperty(prefix = "windy.security", name = ["imageCode.enable"], havingValue = "true")
+class ValidateCodeConfig {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    @Bean
+    @ConditionalOnMissingBean
+    fun validateCodeRepository(factory: RedisConnectionFactory): ValidateCodeRepository {
+        val template = RedisTemplate<String, ValidateCode>()
+        template.setConnectionFactory(factory)
+        template.afterPropertiesSet()
+        return RedisValidateCodeRepository(template)
     }
-
 }

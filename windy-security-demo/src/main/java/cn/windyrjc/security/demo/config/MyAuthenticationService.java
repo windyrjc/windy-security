@@ -1,9 +1,12 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.demo.config;
+
+import cn.windyrjc.security.demo.bean.UserBean;
+import cn.windyrjc.security.demo.bean.UserDetail;
+import cn.windyrjc.security.web.AuthenticationService;
+import cn.windyrjc.security.web.annotation.AuthMapping;
+import cn.windyrjc.security.web.beans.UserDetails;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -23,18 +26,23 @@ import org.springframework.test.context.junit4.SpringRunner;
  * 键盘保佑  永无BUG
  * create by windyrjc
  *
- * @Date 2019-04-10 17:09
+ * @author windyrjc
+ * @Date 2019-03-22 10:52
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+@AuthMapping("/auth/login")
+public class MyAuthenticationService implements AuthenticationService<UserBean> {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
-
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    @NotNull
+    public UserDetails loadUserByCredential(UserBean body, @NotNull PasswordEncoder passwordEncoder) {
+        //todo 通过username 查数据库
+//        //todo password 加密验证等
+        //passwordEncoder.matches()
+//        throw new BadCredentialsException("密码错误!");
+        UserDetail userDetail = new UserDetail("david", "11", "asdfsfs");
+        return UserDetails.instance()
+                .id("windyrjc")
+                .userDetail(userDetail)
+                .addPermission("admin")
+                .addRoles("read", "write", "admin");
     }
-
 }

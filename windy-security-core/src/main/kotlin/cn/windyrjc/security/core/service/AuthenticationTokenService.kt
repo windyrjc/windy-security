@@ -1,9 +1,7 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.core.service
+
+import cn.windyrjc.security.core.AuthenticationRefreshToken
+import cn.windyrjc.security.core.AuthenticationToken
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +20,49 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * authentication对象和token的转换
+ * @Date 2019-02-14 20:42
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+interface AuthenticationTokenService {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    /**
+     * authentication object to token string
+     */
+    fun createAccessToken(authenticationToken: AuthenticationToken): String
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
-    }
+    /**
+     * token string to authentication object
+     */
+    fun readAccessToken(tokenStr: String): AuthenticationToken?
+
+    /**
+     * remove a accessToken
+     */
+    fun removeAccessToken(tokenStr: String)
+
+    /**
+     * remove accessToken by refreshToken
+     */
+    fun removeAccessTokenByRefreshToken(tokenStr: String)
+
+    /**
+     * create refresh_token string
+     */
+    fun createRefreshToken(refreshToken: AuthenticationRefreshToken): String
+
+    /**
+     * read refresh_token
+     */
+    fun readRefreshToken(tokenStr: String): AuthenticationRefreshToken?
+
+    /**
+     * remove refresh_token
+     */
+    fun removeRefreshToken(tokenStr: String)
+
+    /**
+     * find token by userId
+     */
+    fun findTokenByUserId(userId: String): AuthenticationToken?
 
 }

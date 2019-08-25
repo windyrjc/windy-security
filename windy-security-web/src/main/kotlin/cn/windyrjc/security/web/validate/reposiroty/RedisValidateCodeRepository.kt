@@ -1,9 +1,11 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.validate.reposiroty
+
+import cn.windyrjc.security.web.validate.ValidateCode
+import cn.windyrjc.security.web.validate.ValidateCodeType
+import cn.windyrjc.security.web.validate.image.ImageValidateCode
+import cn.windyrjc.utils.copy.DataUtil
+import org.springframework.data.redis.core.RedisTemplate
+import java.util.concurrent.TimeUnit
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +24,32 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-04-01 11:56
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+class RedisValidateCodeRepository(private val redisTemplate: RedisTemplate<String, ValidateCode>) : ValidateCodeRepository {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
-
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    override fun save(key: String, code: ValidateCode, type: ValidateCodeType) {
+        val redKey = buildKey(type, key)
+        if (code is ImageValidateCode) {
+            val imageCode = DataUtil.convert(code, ValidateCode::class.java) { it.except("image") }
+            redisTemplate.opsForValue().set(redKey, imageCode, imageCode.expireIn!!.toLong(), TimeUnit.MINUTES)
+        } else {
+            redisTemplate.opsForValue().set(redKey, code, code.expireIn!!.toLong(), TimeUnit.MINUTES)
+        }
     }
 
+    override fun get(key: String, type: ValidateCodeType): ValidateCode? {
+        val redKey = buildKey(type, key)
+        return redisTemplate.opsForValue().get(redKey)
+
+    }
+
+    override fun remove(key: String, type: ValidateCodeType) {
+        val redKey = buildKey(type, key)
+        redisTemplate.delete(redKey)
+    }
+
+    private fun buildKey(type: ValidateCodeType, key: String): String {
+        return type.prefix + "-" + key
+    }
 }

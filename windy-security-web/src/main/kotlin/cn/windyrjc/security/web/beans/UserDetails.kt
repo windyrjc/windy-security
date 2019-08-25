@@ -1,9 +1,6 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.beans
+
+import org.apache.catalina.User
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +19,74 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-03-22 10:37
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+data class UserDetails(var id: String? = null,
+                       var roles: List<String>? = null,
+                       var permissions: List<String>? = null,
+                       var userDetail: Any? = null,
+                       var isNonForbidden: Boolean? = true,
+                       var isNonLocked: Boolean? = true,
+                       var isEnabled: Boolean? = true) {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    companion object {
+        @JvmStatic
+        fun instance(): UserDetails {
+            return UserDetails()
+        }
     }
+
+    fun id(id: String): UserDetails {
+        this.id = id
+        return this
+    }
+
+    fun roles(roles: List<String>): UserDetails {
+        this.roles = roles
+        return this
+    }
+
+    fun permissions(permissions: List<String>?): UserDetails {
+        this.permissions = permissions
+        return this
+    }
+
+    fun userDetail(userDetail: Any?): UserDetails {
+        this.userDetail = userDetail
+        return this
+    }
+
+    fun nonForbidden(nonForbidden: Boolean): UserDetails {
+        this.isNonForbidden = nonForbidden
+        return this
+    }
+
+    fun nonLocked(nonLocked: Boolean): UserDetails {
+        this.isNonLocked = nonLocked
+        return this
+    }
+
+    fun enabled(enabled: Boolean): UserDetails {
+        this.isEnabled = enabled
+        return this
+    }
+
+    fun addRoles(vararg role: String): UserDetails {
+        if (this.roles == null) {
+            this.roles = mutableListOf()
+        }
+        (this.roles as MutableList<String>).addAll(role)
+        return this
+    }
+
+    fun addPermission(vararg permissions: String): UserDetails {
+        if (this.permissions == null) {
+            this.permissions = mutableListOf()
+        }
+        (permissions as MutableList<String>).addAll(permissions)
+        return this
+    }
+
 
 }

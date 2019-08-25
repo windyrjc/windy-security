@@ -2,134 +2,134 @@
   "groups": [
     {
       "name": "windy.security",
-      "type": "com.github.windyrjc.security.web.properties.WindySecurityWebProperties",
-      "sourceType": "com.github.windyrjc.security.web.properties.WindySecurityWebProperties"
+      "type": "cn.windyrjc.security.web.properties.WindySecurityWebProperties",
+      "sourceType": "cn.windyrjc.security.web.properties.WindySecurityWebProperties"
     }
   ],
   "properties": [
     {
       "name": "windy.security.jwt.jwtKey",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.properties.JwtProperties",
+      "sourceType": "cn.windyrjc.security.web.properties.JwtProperties",
       "defaultValue": null,
       "description": "jwt 密钥"
     },
     {
       "name": "windy.security.accessTokenExpireIn",
       "type": "java.lang.Integer",
-      "sourceType": "com.github.windyrjc.security.web.properties.WindySecurityWebProperties",
+      "sourceType": "cn.windyrjc.security.web.properties.WindySecurityWebProperties",
       "defaultValue": null,
       "description": "access_token 过期时间"
     },
     {
       "name": "windy.security.refreshTokenExpireIn",
       "type": "java.lang.Integer",
-      "sourceType": "com.github.windyrjc.security.web.properties.WindySecurityWebProperties",
+      "sourceType": "cn.windyrjc.security.web.properties.WindySecurityWebProperties",
       "defaultValue": null,
       "description": "refresh_token 过期时间"
     },
     {
       "name": "windy.security.exceptUrl",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.properties.WindySecurityWebProperties",
+      "sourceType": "cn.windyrjc.security.web.properties.WindySecurityWebProperties",
       "defaultValue": null,
       "description": "排除token保护的url路径(ant 风格命名,英文逗号形式隔开,如果设置了matchUrl,排除路径将失效)"
     },
     {
       "name": "windy.security.ignoreUrl",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.properties.WindySecurityWebProperties",
+      "sourceType": "cn.windyrjc.security.web.properties.WindySecurityWebProperties",
       "defaultValue": null,
       "description": "匹配token保护的路径(ant 风格命名,英文逗号形式隔开)"
     },
     {
       "name": "windy.security.injectClass",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.properties.WindySecurityWebProperties",
+      "sourceType": "cn.windyrjc.security.web.properties.WindySecurityWebProperties",
       "defaultValue": null,
       "description": "spring security 自定义注入controller对象"
     },
     {
       "name": "windy.security.imageCode.enable",
       "type": "java.lang.Boolean",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "是否支持图形验证码"
     },
     {
       "name": "windy.security.imageCode.length",
       "type": "java.lang.Integer",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "验证码长度"
     },
     {
       "name": "windy.security.imageCode.expireIn",
       "type": "java.lang.Integer",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "过期时间(分钟)"
     },
     {
       "name": "windy.security.imageCode.width",
       "type": "java.lang.Integer",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "图形验证码长度"
     },
     {
       "name": "windy.security.imageCode.height",
       "type": "java.lang.Boolean",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "图形验证码宽度"
     },
     {
       "name": "windy.security.imageCode.extraUrls",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "自定义额外验证图形验证码的url,以逗号形式隔开"
     },
     {
       "name": "windy.security.imageCode.imageCodeParameter",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "自定义额外验证图形验证码传入参数"
     },
     {
       "name": "windy.security.imageCode.borderColor",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "边框颜色"
     },
     {
       "name": "windy.security.imageCode.border",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "图片边框"
     },
     {
       "name": "windy.security.imageCode.charSpace",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "默认图片间隔"
     },
     {
       "name": "windy.security.imageCode.fontSize",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
+      "sourceType": "cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties",
       "defaultValue": null,
       "description": "验证码文字大小"
     },
     {
       "name": "windy.security.cors.exceptUrl",
       "type": "java.lang.String",
-      "sourceType": "com.github.windyrjc.security.web.cors.CorsProperties",
+      "sourceType": "cn.windyrjc.security.web.cors.CorsProperties",
       "defaultValue": null,
       "description": "cors 排除url"
     }

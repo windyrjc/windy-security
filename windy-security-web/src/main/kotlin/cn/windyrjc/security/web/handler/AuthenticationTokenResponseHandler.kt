@@ -1,9 +1,19 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.handler
+
+import cn.windyrjc.security.core.AuthenticationRefreshToken
+import cn.windyrjc.security.core.AuthenticationToken
+import cn.windyrjc.security.core.AuthenticationTokenResponse
+import cn.windyrjc.security.core.AuthenticationUser
+import cn.windyrjc.security.core.service.AuthenticationTokenService
+import cn.windyrjc.security.web.enhancer.TokenEnhancer
+import cn.windyrjc.security.web.properties.WindySecurityWebProperties
+import cn.windyrjc.utils.response.Response
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
+import org.springframework.security.core.Authentication
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +32,44 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-03-18 17:07
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+class AuthenticationTokenResponseHandler(private val isRefreshEnabled: Boolean = false) {
 
     @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    lateinit var objectMapper: ObjectMapper
+    @Autowired
+    lateinit var authenticationTokenService: AuthenticationTokenService
+    @Autowired
+    lateinit var properties: WindySecurityWebProperties
+    @Autowired(required = false)
+    var tokenEnhancers: List<TokenEnhancer>? = null
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    fun responseWithToken(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication) {
+        val token = buildAuthenticationToken(authentication as AuthenticationUser)
+        val tokenStr = authenticationTokenService.createAccessToken(token)
+        response.contentType = "application/json;charset=UTF-8"
+        response.status = HttpStatus.OK.value()
+        val tokenResponse = AuthenticationTokenResponse(token = tokenStr, tokenExpireIn = token.expireIn, additionalInfo = token.additionalInfo)
+        if (isRefreshEnabled) {
+            val refreshToken = authenticationTokenService.createRefreshToken(buildRefreshAuthenticationToken(authentication.id!!, tokenStr))
+            tokenResponse.refreshToken = refreshToken
+            tokenResponse.refreshTokenExpireIn = properties.refreshTokenExpireIn
+        }
+        response.writer.write(objectMapper.writeValueAsString(Response.success(tokenResponse)))
+    }
+
+    private fun buildAuthenticationToken(authRequest: AuthenticationUser): AuthenticationToken {
+        val map = mutableMapOf<String, Any>()
+        if (tokenEnhancers != null) {
+            tokenEnhancers!!.forEach { map.putAll(it.enhance(authRequest)) }
+            return AuthenticationToken(authRequest, properties.accessTokenExpireIn, map)
+        }
+        return AuthenticationToken(authRequest, properties.accessTokenExpireIn)
+    }
+
+    private fun buildRefreshAuthenticationToken(id: String, accessToken: String): AuthenticationRefreshToken {
+        return AuthenticationRefreshToken(id, properties.refreshTokenExpireIn, accessToken)
     }
 
 }

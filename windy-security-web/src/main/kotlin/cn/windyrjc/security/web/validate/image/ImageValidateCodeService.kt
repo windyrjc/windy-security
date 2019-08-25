@@ -1,9 +1,12 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.validate.image
+
+import cn.windyrjc.security.web.validate.AbstractValidateCodeService
+import cn.windyrjc.security.web.validate.ValidateCode
+import cn.windyrjc.security.web.validate.ValidateCodeGenerator
+import cn.windyrjc.security.web.validate.ValidateCodeType
+import cn.windyrjc.security.web.validate.reposiroty.ValidateCodeRepository
+import javax.imageio.ImageIO
+import javax.servlet.http.HttpServletResponse
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +25,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-04-01 09:45
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
-
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
-
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+class ImageValidateCodeService(generator: ValidateCodeGenerator,
+                               repository: ValidateCodeRepository) : AbstractValidateCodeService(generator, repository, ValidateCodeType.image) {
+    override fun send(response: HttpServletResponse, code: ValidateCode) {
+        if (code is ImageValidateCode) {
+            ImageIO.write(code.image,"JPEG", response.outputStream)
+        }
     }
-
 }

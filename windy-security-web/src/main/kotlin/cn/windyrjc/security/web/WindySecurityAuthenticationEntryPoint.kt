@@ -1,9 +1,14 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web
+
+import cn.windyrjc.utils.response.Response
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.security.core.AuthenticationException
+import org.springframework.security.web.AuthenticationEntryPoint
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +27,18 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-03-18 19:44
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+class WindySecurityAuthenticationEntryPoint(val objectMapper: ObjectMapper) : AuthenticationEntryPoint {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    val log = LoggerFactory.getLogger(WindySecurityAuthenticationEntryPoint::class.java)
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    override fun commence(request: HttpServletRequest, response: HttpServletResponse, exception: AuthenticationException) {
+        log.info(request.requestURI + ":" + exception.message)
+        response.characterEncoding = "UTF-8"
+        response.contentType = MediaType.APPLICATION_JSON_UTF8_VALUE
+        response.status = HttpStatus.UNAUTHORIZED.value()
+        response.writer.write(objectMapper.writeValueAsString(Response.fail(msg = exception.message!!)))
     }
 
 }

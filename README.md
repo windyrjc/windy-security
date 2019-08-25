@@ -1,6 +1,6 @@
 # windy security
 
-windy-security 是适用于spring boot的安全框架,它使用kotlin语言编写,基于前后端分离架构(暂时是单体应用)的后端保护,鉴权,它构建与spring-security之上,简化接入安全框架的步骤.
+windy-security 是适用于spring boot的安全框架,它使用kotlin语言编写,基于前后端分离架构(暂时是单体应用)的后端保护,鉴权,它构建在spring-security之上,简化接入安全框架的步骤.
 
 ## 起步
 

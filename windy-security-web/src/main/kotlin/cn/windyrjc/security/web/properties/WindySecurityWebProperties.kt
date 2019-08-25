@@ -1,9 +1,10 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.properties
+
+import cn.windyrjc.security.web.cors.CorsProperties
+import cn.windyrjc.security.web.properties.JwtProperties
+import cn.windyrjc.security.web.properties.RedisProperties
+import cn.windyrjc.security.web.validate.image.ImageValidateCodeProperties
+import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +23,53 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-03-06 17:54
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+@ConfigurationProperties("windy.security")
+class WindySecurityWebProperties {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    /**
+     * spring security 自定义注入controller对象
+     */
+    var injectClass: Class<*>? = null
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
-    }
+    /**
+     * jwt 相关
+     */
+    var jwt: JwtProperties = JwtProperties()
 
+    /**
+     * redis
+     */
+    var redis: RedisProperties = RedisProperties()
+
+    /**
+     * 图形验证码相关
+     */
+    var imageCode: ImageValidateCodeProperties = ImageValidateCodeProperties()
+
+    /**
+     * 跨域相关
+     */
+    var cors: CorsProperties = CorsProperties()
+
+    /**
+     * 排除token保护的url路径(ant 风格命名,英文逗号形式隔开,如果设置了matchUrl,排除路径将失效)
+     */
+    var ignoreUrl: String = ""
+
+    /**
+     * 匹配token保护的路径(ant 风格命名,英文逗号形式隔开)
+     */
+    var matchUrl: String = ""
+
+    /**
+     * access_token 过期时间
+     */
+    var accessTokenExpireIn: Int = 7200
+
+    /**
+     * refresh_token 过期时间
+     */
+    var refreshTokenExpireIn: Int = 108000
 }

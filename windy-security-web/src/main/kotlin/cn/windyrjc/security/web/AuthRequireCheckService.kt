@@ -1,9 +1,15 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web
+
+import cn.windyrjc.security.core.exception.WindySecurityException
+import cn.windyrjc.security.web.annotation.AuthMapping
+import cn.windyrjc.security.web.annotation.RefreshMapping
+import org.springframework.beans.factory.InitializingBean
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.annotation.AnnotationUtils
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import org.springframework.security.web.util.matcher.RequestMatcher
+import org.springframework.util.Assert
+import javax.servlet.http.HttpServletRequest
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +28,50 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-03-31 20:29
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+class AuthRequireCheckService : InitializingBean {
 
     @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    private lateinit var authenticationServices: List<cn.windyrjc.security.web.AuthenticationService<*>>
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    override fun afterPropertiesSet() {
+        setAuthFilterProcessUrls()
+    }
+
+    private var requiresAuthenticationRequestMatchers: List<RequestMatcher>? = null
+
+    fun requiresAuthentication(request: HttpServletRequest): Boolean {
+        return requiresAuthenticationRequestMatchers!!.any { it.matches(request) }
+    }
+
+    // 拿到接口上方的登录路径
+    private fun setAuthFilterProcessUrls() {
+        val urls = mutableListOf<String>()
+        authenticationServices.forEach {
+            val annotation = AnnotationUtils.findAnnotation(it::class.java, AuthMapping::class.java)
+            if (annotation != null) {
+                urls.add(annotation.value)
+            } else {
+                val refresh = AnnotationUtils.findAnnotation(it::class.java, RefreshMapping::class.java)
+                        ?: return@forEach
+                urls.add(refresh.value)
+            }
+        }
+        if (urls.isEmpty()) {
+            throw WindySecurityException("登录url不能为空!")
+        }
+        val requestMatchers = arrayListOf<RequestMatcher>()
+        urls.forEach {
+            requestMatchers.add(AntPathRequestMatcher(it))
+        }
+        setRequiresAuthenticationRequestMatcher(requestMatchers)
+    }
+
+    private fun setRequiresAuthenticationRequestMatcher(
+            requestMatchers: List<RequestMatcher>) {
+        Assert.notNull(requestMatchers, "requestMatchers cannot be null")
+        this.requiresAuthenticationRequestMatchers = requestMatchers
     }
 
 }

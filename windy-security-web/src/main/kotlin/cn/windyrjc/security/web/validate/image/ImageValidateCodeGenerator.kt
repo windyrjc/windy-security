@@ -1,9 +1,9 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.validate.image
+
+import cn.windyrjc.security.web.validate.ValidateCode
+import cn.windyrjc.security.web.validate.ValidateCodeGenerator
+import com.google.code.kaptcha.Producer
+import org.springframework.beans.factory.annotation.Autowired
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +22,16 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-04-01 11:10
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+class ImageValidateCodeGenerator(val properties: ImageValidateCodeProperties) : ValidateCodeGenerator {
 
     @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    private lateinit var producer: Producer
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    override fun generate(deviceId: String): ValidateCode {
+        val text = producer.createText()
+        return ImageValidateCode(text, properties.expireIn, producer.createImage(text))
     }
 
 }

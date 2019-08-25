@@ -1,9 +1,4 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.common
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +17,55 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-03-30 10:09
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+//todo 细粒度 http方法匹配
+class UrlMatcherRegistry(matchUrls: List<String>,
+                         ignoreUrls: List<String>,
+                         corsIgnoreUrls: List<String>) {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    var matchUrls: MutableList<String> = mutableListOf()
+    var ignoreUrls: MutableList<String> = mutableListOf()
+    var corsIgnoreUrls: MutableList<String> = mutableListOf()
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    init {
+        matchUrls.forEach {
+            if (it.isEmpty()) {
+                return@forEach
+            } else {
+                this.matchUrls.add(it)
+            }
+        }
+        ignoreUrls.forEach {
+            if (it.isEmpty()) {
+                return@forEach
+            } else {
+                this.ignoreUrls.add(it)
+            }
+        }
+        corsIgnoreUrls.forEach {
+            if (it.isEmpty()) {
+                return@forEach
+            } else {
+                this.corsIgnoreUrls.add(it)
+            }
+        }
+    }
+
+
+    fun ignoreUrl(vararg url: String): UrlMatcherRegistry {
+        ignoreUrls.addAll(url)
+        return this
+    }
+
+    fun matchUrl(vararg url: String): UrlMatcherRegistry {
+        matchUrls.addAll(url)
+        return this
+    }
+
+    fun corsIgnoreUrl(vararg url: String): UrlMatcherRegistry {
+        corsIgnoreUrls.addAll(url)
+        return this
     }
 
 }

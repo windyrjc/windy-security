@@ -1,9 +1,6 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.core
+
+import com.fasterxml.jackson.annotation.JsonInclude
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +19,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-03-30 09:25
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
-
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
-
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
-    }
-
-}
+@JsonInclude(JsonInclude.Include.NON_NULL)
+class AuthenticationTokenResponse(var token: String? = null,
+                                  var tokenExpireIn: Int? = null,
+                                  var refreshToken: String? = null,
+                                  var refreshTokenExpireIn: Int? = null,
+                                  var additionalInfo: Map<String, Any>? = null)

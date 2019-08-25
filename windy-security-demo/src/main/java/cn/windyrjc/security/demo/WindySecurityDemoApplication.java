@@ -1,9 +1,9 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.demo;
+
+import cn.windyrjc.security.core.service.TokenService;
+import cn.windyrjc.security.web.annotation.EnableWindySecurity;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -23,18 +23,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * 键盘保佑  永无BUG
  * create by windyrjc
  *
- * @Date 2019-04-10 17:09
+ * @author windyrjc
+ * @Date 2019-02-13 23:08
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+@SpringBootApplication
+@EnableWindySecurity(service = TokenService.REDIS)
+public class WindySecurityDemoApplication {
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    public static void main(String[] args) {
+        SpringApplication.run(WindySecurityDemoApplication.class, args);
     }
-
 }

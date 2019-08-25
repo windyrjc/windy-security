@@ -1,9 +1,15 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.cors
+
+import cn.windyrjc.security.common.UrlMatcherRegistry
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.util.AntPathMatcher
+import org.springframework.web.filter.OncePerRequestFilter
+import java.io.IOException
+import javax.servlet.FilterChain
+import javax.servlet.ServletException
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +28,48 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-04-15 19:39
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+class SimpleCorsFilter : OncePerRequestFilter() {
+
+    private val log = LoggerFactory.getLogger(SimpleCorsFilter::class.java)
+
+    private val requestMatcher = AntPathMatcher()
 
     @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    lateinit var urlMatcherRegistry: UrlMatcherRegistry
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    @Throws(ServletException::class, IOException::class)
+    override fun doFilterInternal(httpServletRequest: HttpServletRequest, httpServletResponse: HttpServletResponse, filterChain: FilterChain) {
+        val origin = httpServletRequest.remoteHost as String + ":" + httpServletRequest.remotePort
+        if (checkUrl(httpServletRequest)) {
+            log.debug("cors: url: {} port: {}", httpServletRequest.requestURI, origin)
+            httpServletResponse.setHeader("Access-Control-Allow-Origin", "*")
+            httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE,PUT,PATCH")
+            httpServletResponse.setHeader("Access-Control-Max-Age", "3600")
+            httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with,Authorization,content-type")
+            httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true")
+            //主要适应前后端分离架构 对跨域请求 axios 库会预先发送options 请求
+            if ("OPTIONS".equals(httpServletRequest.method, ignoreCase = true)) {
+                httpServletResponse.status = HttpServletResponse.SC_OK
+            } else {
+                filterChain.doFilter(httpServletRequest, httpServletResponse)
+            }
+        } else {
+            filterChain.doFilter(httpServletRequest, httpServletResponse)
+        }
+    }
+
+    private fun checkUrl(request: HttpServletRequest): Boolean {
+        val ignoreUrls = urlMatcherRegistry.corsIgnoreUrls
+        ignoreUrls.forEach {
+            if (requestMatcher.match(it, request.requestURI)) {
+                return false
+            } else {
+                return@forEach
+            }
+        }
+        return true
     }
 
 }

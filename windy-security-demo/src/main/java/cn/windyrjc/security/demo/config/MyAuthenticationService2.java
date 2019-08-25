@@ -1,9 +1,14 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.demo.config;
+
+import cn.windyrjc.security.demo.bean.UserDetail;
+import cn.windyrjc.security.web.AuthenticationService;
+import cn.windyrjc.security.web.annotation.AuthMapping;
+import cn.windyrjc.security.web.beans.DefaultAuthenticationLoginForm;
+import cn.windyrjc.security.web.beans.UserDetails;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -23,18 +28,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * 键盘保佑  永无BUG
  * create by windyrjc
  *
- * @Date 2019-04-10 17:09
+ * @author windyrjc
+ * @Date 2019-03-22 10:55
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+@Component
+@AuthMapping("/auth/form")
+public class MyAuthenticationService2 implements AuthenticationService<DefaultAuthenticationLoginForm> {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
-
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    @NotNull
+    public UserDetails loadUserByCredential(DefaultAuthenticationLoginForm body, @NotNull PasswordEncoder passwordEncoder) {
+        return new UserDetails(body.getUsername(), Lists.newArrayList("admin", "user", "test"), Lists.newArrayList("read", "write", "test", "dfsf"), new UserDetail(body.getUsername(), null, null), true, true, true);
     }
-
 }

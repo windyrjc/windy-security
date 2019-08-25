@@ -7,7 +7,7 @@ windy:
   security:
     jwt:
       jwtKey: ascdsdf
-    injectClass: com.github.windyrjc.security.demo.bean.UserDetail
+    injectClass: cn.windyrjc.security.demo.bean.UserDetail
     imageCode:
       enable: true
 

@@ -1,9 +1,8 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.validate
+
+import cn.windyrjc.security.web.validate.exception.ValidateCodeException
+import cn.windyrjc.security.web.validate.reposiroty.ValidateCodeRepository
+import javax.servlet.http.HttpServletResponse
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +21,44 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-04-01 11:39
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+abstract class AbstractValidateCodeService(private var generator: ValidateCodeGenerator,
+                                           private var repository: ValidateCodeRepository,
+                                           private var type: ValidateCodeType) : ValidateCodeService {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    override fun generate(deviceId: String, response: HttpServletResponse) {
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+        val validateCode = generator.generate(deviceId)
+        //保存
+        repository.save(deviceId, validateCode, type)
+        //发送
+        send(response, validateCode)
     }
 
+    abstract fun send(response: HttpServletResponse, code: ValidateCode)
+
+
+    override fun validate(code: String, deviceId: String) {
+
+        val validateCode = repository.get(deviceId, type)
+
+        if (code.isEmpty()) {
+            throw ValidateCodeException("验证码不能为空")
+        }
+
+        if (validateCode == null) {
+            throw ValidateCodeException("验证码不存在")
+        }
+
+        if (validateCode.isExpired()) {
+            throw ValidateCodeException("验证码过期")
+        }
+
+        if (validateCode.code!!.toLowerCase() != code.toLowerCase()) {
+            throw ValidateCodeException("验证码不匹配")
+        }
+
+        repository.remove(deviceId, type)
+    }
 }

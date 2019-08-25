@@ -1,9 +1,10 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.annotation
+
+import cn.windyrjc.security.core.service.TokenService
+import cn.windyrjc.security.web.config.JwtAuthenticationServiceConfig
+import cn.windyrjc.security.web.config.RedisAuthenticationTokenServiceConfig
+import org.springframework.context.annotation.ImportSelector
+import org.springframework.core.type.AnnotationMetadata
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +23,59 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-04-02 12:03
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+class WindySecurityImportBeanDefinition : ImportSelector {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    override fun selectImports(importingClassMetadata: AnnotationMetadata): Array<String> {
+        val map = importingClassMetadata.getAnnotationAttributes(EnableWindySecurity::class.java.name) ?: return arrayOf()
+        val service = map["service"] as TokenService
+        return when (service) {
+            TokenService.JWT -> {
+                arrayOf(JwtAuthenticationServiceConfig::class.java.name)
+            }
+            TokenService.REDIS -> {
+                arrayOf(RedisAuthenticationTokenServiceConfig::class.java.name)
+            }
+        }
     }
+
+//    @Autowired
+//    lateinit var properties: WindySecurityWebProperties
+//    @Autowired
+//    lateinit var redisTemplate: RedisTemplate<Any, Any>
+
+//    override fun registerBeanDefinitions(importingClassMetadata: AnnotationMetadata, registry: BeanDefinitionRegistry) {
+//        val map = importingClassMetadata.getAnnotationAttributes(EnableWindySecurity::class.java.name) ?: return
+//        val service = map["service"] as TokenService
+//        when (service) {
+//            TokenService.JWT -> {
+//                doJwt(registry)
+//            }
+//            TokenService.REDIS -> {
+//                doRedis(registry)
+//            }
+//        }
+//    }
+//
+//    private fun doJwt(registry: BeanDefinitionRegistry) {
+//        val bean = GenericBeanDefinition()
+//        bean.setBeanClass(JwtAuthenticationTokenService::class.java)
+//        val constructors = ConstructorArgumentValues()
+////        constructors.addIndexedArgumentValue(0, env!!["windy.security.jwt.jwtKey"])
+//        bean.constructorArgumentValues = constructors
+//        registry.registerBeanDefinition(TokenService.JWT.beanName, bean)
+//    }
+//
+//    private fun doRedis(registry: BeanDefinitionRegistry) {
+//        val bean = GenericBeanDefinition()
+//        bean.setBeanClass(RedisAuthenticationTokenServiceConfig::class.java)
+//        val constructors = ConstructorArgumentValues()
+////        constructors.addIndexedArgumentValue(0, context!!.getBean(RedisTemplate::class.java))
+////        constructors.addIndexedArgumentValue(1, context!!.getBean(WindySecurityWebProperties::class.java).redis.prefix)
+//        bean.constructorArgumentValues = constructors
+//        registry.registerBeanDefinition(TokenService.REDIS.beanName, bean)
+//    }
 
 }

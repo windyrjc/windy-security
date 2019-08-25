@@ -1,9 +1,12 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.demo;
+
+import cn.windyrjc.security.demo.bean.UserBean;
+import cn.windyrjc.security.demo.bean.UserDetail;
+import cn.windyrjc.utils.response.Response;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -23,18 +26,21 @@ import org.springframework.test.context.junit4.SpringRunner;
  * 键盘保佑  永无BUG
  * create by windyrjc
  *
- * @Date 2019-04-10 17:09
+ * @Date 2019-03-21 21:47
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+@RestController
+public class TestController {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    @GetMapping("/test")
+    public Response<UserDetail> test(UserDetail authentication) {
+        UserBean bean = new UserBean();
+        bean.setOpenId("123");
+        return Response.success(authentication);
+    }
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    @GetMapping("/test1")
+    public Response<Authentication> test1(Authentication authentication) {
+        return Response.success(authentication);
     }
 
 }

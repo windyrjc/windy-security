@@ -1,9 +1,8 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.config.selector
+
+import cn.windyrjc.security.core.exception.WindySecurityException
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +21,22 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-04-16 10:26
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+class WindySecurityConfigSelector {
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    @Autowired(required = false)
+    private var windySecurityConfigList: List<WindySecurityConfig>? = null
+
+    fun selectAndConfig(http: HttpSecurity) {
+        if (windySecurityConfigList != null) {
+            try {
+                windySecurityConfigList!!.forEach { it.configure(http) }
+            } catch (e: Exception) {
+                throw WindySecurityException("加载自定义配置错误! ${e.message}")
+            }
+        }
     }
 
 }

@@ -1,9 +1,8 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.demo.bean;
+
+import cn.windyrjc.security.web.validate.image.ImageValidateCodeBean;
+import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -23,18 +22,25 @@ import org.springframework.test.context.junit4.SpringRunner;
  * 键盘保佑  永无BUG
  * create by windyrjc
  *
- * @Date 2019-04-10 17:09
+ * @Date 2019-03-22 10:51
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+@Data
+public class UserBean implements ImageValidateCodeBean {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    private String openId;
+    //
+    private String code;
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    private String deviceId;
+
+    //
+    @NotNull
+    public String getImageCode() {
+        return code;
     }
 
+    @NotNull
+    public String getDeviceId() {
+        return deviceId;
+    }
 }

@@ -1,9 +1,12 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.config
+
+import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService
+import cn.windyrjc.security.web.properties.WindySecurityWebProperties
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.data.redis.core.StringRedisTemplate
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +25,20 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-04-02 14:52
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+@Configuration
+class RedisAuthenticationTokenServiceConfig {
 
     @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
+    lateinit var redisTemplate: RedisTemplate<Any, Any>
+    @Autowired
+    lateinit var stringRedisTemplate: StringRedisTemplate
+    @Autowired
+    lateinit var properties: WindySecurityWebProperties
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    @Bean
+    fun redisAuthenticationTokenService(): RedisAuthenticationTokenService {
+        return RedisAuthenticationTokenService(redisTemplate, stringRedisTemplate, properties.redis.prefix)
     }
-
 }

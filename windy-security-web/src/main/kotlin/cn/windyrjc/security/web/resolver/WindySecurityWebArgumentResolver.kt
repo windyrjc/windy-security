@@ -1,9 +1,14 @@
-import cn.windyrjc.security.core.service.impl.RedisAuthenticationTokenService;
-import cn.windyrjc.security.demo.WindySecurityDemoApplication;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+package cn.windyrjc.security.web.resolver
+
+import cn.windyrjc.security.core.AuthenticationUser
+import cn.windyrjc.security.core.exception.WindySecurityException
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.core.MethodParameter
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.bind.support.WebDataBinderFactory
+import org.springframework.web.context.request.NativeWebRequest
+import org.springframework.web.method.support.HandlerMethodArgumentResolver
+import org.springframework.web.method.support.ModelAndViewContainer
 
 /**
  * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -22,19 +27,28 @@ import org.springframework.test.context.junit4.SpringRunner;
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  * 键盘保佑  永无BUG
  * create by windyrjc
- *
- * @Date 2019-04-10 17:09
+ * @Date 2019-03-22 14:53
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = WindySecurityDemoApplication.class)
-public class WindySecurityDemoApplicationTest {
+class WindySecurityWebArgumentResolver(private val userDetail: Class<*>? = null,
+                                       private val objectMapper: ObjectMapper) : HandlerMethodArgumentResolver {
 
-    @Autowired
-    private RedisAuthenticationTokenService redisAuthenticationTokenService;
 
-    @org.junit.Test
-    public void test(){
-        redisAuthenticationTokenService.removeAccessToken("ddb86af5-5b76-11e9-b1f5-4ec200c8cda1");
+    override fun resolveArgument(parameter: MethodParameter, mavContainer: ModelAndViewContainer?, webRequest: NativeWebRequest, binderFactory: WebDataBinderFactory?): Any? {
+        val clazz = parameter.parameterType
+        val authentication = SecurityContextHolder.getContext().authentication
+        if (authentication is AuthenticationUser) {
+            if (clazz.isAssignableFrom(AuthenticationUser::class.java)) {
+                return objectMapper.convertValue(authentication, clazz)
+            }
+            val detail = authentication.userDetail
+            return objectMapper.readValue(detail, clazz)
+        } else throw WindySecurityException("authentication 参数错误!")
+    }
+
+    override fun supportsParameter(parameter: MethodParameter): Boolean {
+        if (userDetail == null) return false
+        if (parameter.parameterType.isAssignableFrom(AuthenticationUser::class.java)) return true
+        return parameter.parameterType.isAssignableFrom(userDetail)
     }
 
 }
